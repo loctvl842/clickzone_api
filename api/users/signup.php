@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
@@ -15,25 +14,19 @@ $user = new User($conn);
 
 try {
   $user_input = json_decode(file_get_contents("php://input"));
+
+  $user->username = $user_input->username;
   $user->email = $user_input->email;
   $user->password = $user_input->password;
-  $result = $user->searchby_email();
-
-  if (!password_verify($user->password, $result["password"])) {
-    throw new Exception("Wrong password");
-  }
-
-  $_SESSION["loggedIn"] = true;
-  $_SESSION["user"] = $result;
-
+  $user->add();
   echo json_encode(array(
-    "loggedIn" => true,
-    "message" => "Login successfully"
+    "registered" => true,
+    "message" => "Register successfully",
   ));
 } catch (Exception $e) {
-  http_response_code(401);
+  http_response_code(400);
   echo json_encode(array(
-    "loggedIn" => false,
-    "message" => $e->getMessage()
+    "registered" => false,
+    "message" => $e->getMessage(),
   ));
 }
