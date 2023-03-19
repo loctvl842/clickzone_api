@@ -17,24 +17,16 @@ class User
     $this->conn = $conn;
   }
 
-  public function login()
+  public function searchby_email()
   {
     // prepare
     $query = "SELECT id, username, email, password, phone FROM $this->table WHERE email = :email";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam("email", $this->email);
     $stmt->execute();
-
     if ($stmt->rowCount() === 0) {
       return false;
     }
-    else {
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      extract($row);
-      if ($password !== $this->password) {
-        return false;
-      }
-    }
-    return true;
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }
