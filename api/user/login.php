@@ -23,10 +23,12 @@ try {
     throw new Exception("Wrong password");
   }
 
+  $token = uniqid();
   $_SESSION["loggedIn"] = true;
-  $_SESSION["user"] = $result;
+  $_SESSION["token"] = $token;
 
   echo json_encode(array(
+    "token" => $token,
     "loggedIn" => true,
     "message" => "Login successfully"
   ));
