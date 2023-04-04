@@ -18,6 +18,26 @@ try {
   $user->username = $user_input->username;
   $user->email = $user_input->email;
   $user->password = $user_input->password;
+
+  if (empty($user->username)) {
+    throw new Exception("Username cannot be empty");
+  }
+  if (empty($user->email)) {
+    throw new Exception("Email cannot be empty");
+  }
+  // Validate email
+  if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+    throw new Exception("Invalid email format");
+  }
+  if (empty($user->password)) {
+    throw new Exception("Password cannot be empty");
+  }
+
+  if ($user->searchby_email()) {
+    $msg = "Sorry, this email address is already in use. Please choose a different email address.";
+    throw new Exception($msg);
+  }
+
   $user->add();
   echo json_encode(array(
     "registered" => true,

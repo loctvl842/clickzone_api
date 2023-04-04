@@ -18,9 +18,15 @@ try {
   $user->email = $user_input->email;
   $user->password = $user_input->password;
   $result = $user->searchby_email();
-
+  // check email exist
+  if (!$result) {
+    $msg = "The email address you entered is incorrect.";
+    throw new Exception($msg);
+  }
+  // check password match
   if (!password_verify($user->password, $result["password"])) {
-    throw new Exception("Wrong password");
+    $msg = "Password is incorrect. Please try again.";
+    throw new Exception($msg);
   }
 
   $token = uniqid();

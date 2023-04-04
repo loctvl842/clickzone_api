@@ -24,7 +24,7 @@ class User
     }
 
     // prepare
-    $query = "SELECT id, username, email, password FROM $this->table WHERE email = :email";
+    $query = "SELECT id, username, email, password, is_admin FROM $this->table WHERE email = :email";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam("email", $this->email);
     $stmt->execute();
