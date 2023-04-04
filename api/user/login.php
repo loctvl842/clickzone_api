@@ -31,7 +31,7 @@ try {
 
   $token = uniqid();
   $_SESSION["loggedIn"] = true;
-  $_SESSION["token"] = $token;
+  $_SESSION[$token] = $result;
 
   echo json_encode(array(
     "token" => $token,
