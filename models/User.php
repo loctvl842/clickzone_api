@@ -9,6 +9,7 @@ class User
   public $username;
   public $email;
   public $password;
+  static public $min_pwd_length = 8;
 
   // Constructor with DB
   public function __construct($conn)
@@ -28,33 +29,12 @@ class User
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam("email", $this->email);
     $stmt->execute();
-    if ($stmt->rowCount() === 0) {
-      throw new Exception("Email doesn't exist!");
-    }
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
 
   public function add()
   {
-    if (empty($this->username)) {
-      throw new Exception("Username cannot be empty");
-    }
-    if (empty($this->email)) {
-      throw new Exception("Email cannot be empty");
-    }
-    // Validate email
-    if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-      throw new Exception("Invalid email format");
-    }
-    if (empty($this->password)) {
-      throw new Exception("Password cannot be empty");
-    }
-
-    $min_pwd_length = 8;
-    if (strlen($this->password) < $min_pwd_length) {
-      throw new Exception("Password must be at least $min_pwd_length characters long.");
-    }
     $query = "INSERT INTO $this->table(username, email, password)
               VALUES (:username, :email, :password)";
     $stmt = $this->conn->prepare($query);

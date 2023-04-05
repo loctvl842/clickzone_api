@@ -38,6 +38,11 @@ try {
     throw new Exception($msg);
   }
 
+  if (strlen($user->password) < User::$min_pwd_length) {
+    $min_length = User::$min_pwd_length;
+    throw new Exception("Password must be at least $min_length characters long.");
+  }
+
   $user->add();
   echo json_encode(array(
     "registered" => true,
