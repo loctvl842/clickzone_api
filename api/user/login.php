@@ -30,18 +30,18 @@ try {
   }
 
   $token = uniqid();
-  $_SESSION["loggedIn"] = true;
   $_SESSION[$token] = $result;
 
   echo json_encode(array(
+    "success" => true,
     "token" => $token,
-    "loggedIn" => true,
+    "user" => $result,
     "message" => "Login successfully"
   ));
 } catch (Exception $e) {
   http_response_code(401);
   echo json_encode(array(
-    "loggedIn" => false,
+    "success" => false,
     "message" => $e->getMessage()
   ));
 }

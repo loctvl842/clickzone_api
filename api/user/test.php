@@ -4,7 +4,7 @@ session_start();
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
-echo User::$min_pwd_length;
+echo json_encode($_SESSION);
 
 
 // $str =  "<p>asdfasdfasdfasdfasdfas</p><p>asdf</p><p>asdfa</p><p>asdfasd</p>";

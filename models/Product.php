@@ -35,4 +35,14 @@ class Product
     );
     return $stmt->execute($data);
   }
+
+  public function getByPage($page, $num)
+  {
+    $start_idx = $page * $num;
+    $query = "SELECT * FROM $this->table LIMIT $start_idx, $num";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
