@@ -4,9 +4,13 @@ session_start();
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
+echo User::$min_pwd_length;
 
-$token = $_COOKIE["token"];
-echo json_encode($_SESSION[$token]);
+
+// $str =  "<p>asdfasdfasdfasdfasdfas</p><p>asdf</p><p>asdfa</p><p>asdfasd</p>";
+//
+// // echo $str;
+// echo htmlspecialchars(strip_tags($str));
 
 // $database = new Database();
 // $conn = $database->connect();

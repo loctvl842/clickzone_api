@@ -66,3 +66,6 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+INSERT INTO products(name, image_url, price, old_price, description)
+              VALUES ("Bàn phím cơ RK918 White - Kèm kê tay", "https://zpro.vn/images/product/500x500/ban-phim-co-rk918-white-kem-ke-tay.1666326022.jpg", 1090000, 1500000, "<h3>- Phiên bản 2022 mới nhất: Stab xịn hơn, êm và chắc chắn; font chữ đẹp hơn; có sách HD đa ngôn ngữ, tùy đợt hàng có tặng kèm keypuller thép.</h3><h3>- Sử dụng switch RK được cải tiến, cảm giác bấm mềm hơn, độ bền 50 triệu lần bấm.</h3><h3>- Led RGB 16,8 triệu màu nhiều hiệu ứng.</h3><h3>- Phần mềm tùy chỉnh giao diện tiếng Anh dễ sử dụng (chỉ hỗ trợ HĐH Window).</h3><h3>- Tích hợp led gầm RGB siêu sang, siêu sáng.</h3><h3>- Keycap ABS double shot ko mờ chữ.</h3><h3>- Plate hợp kim cắt CNC cao cấp.</h3><h3>- Bảo hành 2 năm (1 đổi 1 trong 10 ngày đầu nếu lỗi).</h3>")
