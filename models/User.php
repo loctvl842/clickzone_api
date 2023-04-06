@@ -17,7 +17,7 @@ class User
     $this->conn = $conn;
   }
 
-  public function searchby_email()
+  public function searchBy_email()
   {
     // Validate email
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {

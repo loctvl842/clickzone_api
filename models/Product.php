@@ -45,4 +45,14 @@ class Product
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   }
+
+  public function searchBy_id()
+  {
+    $query = "SELECT * FROM $this->table WHERE $this->table.id = :productId";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam("productId", $this->id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }

@@ -33,7 +33,7 @@ try {
     throw new Exception("Password cannot be empty");
   }
 
-  if ($user->searchby_email()) {
+  if ($user->searchBy_email()) {
     $msg = "Sorry, this email address is already in use. Please choose a different email address.";
     throw new Exception($msg);
   }

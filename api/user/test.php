@@ -18,7 +18,7 @@ echo json_encode($_SESSION);
 // $user = new User($conn);
 //
 // $user->email = "loclepnvx@gmail.com";
-// $result = $user->searchby_email();
+// $result = $user->searchBy_email();
 
 // echo json_encode($result);
 

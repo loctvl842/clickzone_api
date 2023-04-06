@@ -17,7 +17,7 @@ try {
   $user_input = json_decode(file_get_contents("php://input"));
   $user->email = $user_input->email;
   $user->password = $user_input->password;
-  $result = $user->searchby_email();
+  $result = $user->searchBy_email();
   // check email exist
   if (!$result) {
     $msg = "The email address you entered is incorrect.";
