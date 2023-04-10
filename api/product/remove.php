@@ -1,9 +1,8 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-
 include_once '../../config/Database.php';
 include_once '../../models/Product.php';
 
@@ -13,14 +12,13 @@ $conn = $database->connect();
 $product = new Product($conn);
 
 try {
-  $page = $_GET['page'] ?? 0;
-  $num = $_GET['num'] ?? 36;
-  $products = $product->getBy_pageNumber($page, $num);
-  http_response_code(200);
+  $user_input = json_decode(file_get_contents("php://input"));
+
+  $product->id = $user_input->productId;
+  $product->removeBy_id();
   echo json_encode(array(
     "success" => true,
-    "products" => $products,
-    "pageSize" => $num
+    "message" => "remove successfully",
   ));
 } catch (Exception $e) {
   http_response_code(500);

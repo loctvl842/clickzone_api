@@ -14,11 +14,15 @@ $product = new Product($conn);
 try {
   $user_input = json_decode(file_get_contents("php://input"));
 
-  $product->name = $user_input->name;
-  $product->image_url = $user_input->image_url;
-  $product->price = $user_input->price;
-  $product->old_price = $user_input->old_price;
-  $product->description = $user_input->description;
+  $product->id = $user_input->id;
+
+  $targetProduct = $product->searchBy_id();
+
+  $product->name = $user_input->name ?? $targetProduct["name"];
+  $product->image_url = $user_input->image_url ?? $targetProduct["image_url"];
+  $product->price = $user_input->price ?? $targetProduct["price"];
+  $product->old_price = $user_input->old_price ?? $targetProduct["old_price"];
+  $product->description = $user_input->description ?? $targetProduct["description"];
 
   if (empty($product->name)) {
     throw new Exception("Name of product cannot be empty.");
@@ -30,16 +34,15 @@ try {
     throw new Exception("Please provide price of product.");
   }
 
-  $newProduct = $product->add();
-
-  http_response_code(200); // bad request
+  $updatedProduct = $product->editBy_id();
+  http_response_code(200);
   echo json_encode(array(
     "success" => true,
-    "product" => $newProduct,
-    "message" => "New product created and added to your store!"
+    "message" => "Updated product successfully.",
+    "product" => $updatedProduct
   ));
 } catch (Exception $e) {
-  http_response_code(400); // bad request
+  http_response_code(400);
   echo json_encode(array(
     "success" => false,
     "message" => $e->getMessage(),

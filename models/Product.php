@@ -33,10 +33,17 @@ class Product
       "old_price" => $this->old_price,
       "description" => $this->description
     );
-    return $stmt->execute($data);
+    $stmt->execute($data);
+
+    // Get the ID of the last inserted row
+    $lastProductId = $this->conn->lastInsertId();
+    $this->id = $lastProductId;
+
+    $result = $this->searchBy_id($lastProductId);
+    return $result;
   }
 
-  public function getByPage($page, $num)
+  public function getBy_pageNumber($page, $num)
   {
     $start_idx = $page * $num;
     $query = "SELECT * FROM $this->table LIMIT $start_idx, $num";
@@ -53,6 +60,41 @@ class Product
     $stmt->bindParam("productId", $this->id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
+
+  public function removeBy_id()
+  {
+    $query = "DELETE FROM $this->table WHERE id = :productId";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam("productId", $this->id);
+    $stmt->execute();
+    if ($stmt->rowCount() == 0) {
+      throw new Exception("There is no product with id: $this->id.");
+    }
+  }
+
+  public function editBy_id()
+  {
+    $query = "UPDATE $this->table 
+    SET name = :name, image_url = :image_url, price = :price, old_price = :old_price, description = :description
+    WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+    $data = array(
+      "id" => $this->id,
+      "name" => $this->name,
+      "image_url" => $this->image_url,
+      "price" => $this->price,
+      "old_price" => $this->old_price,
+      "description" => $this->description
+    );
+    $stmt->execute($data);
+
+    // Get the ID of the last inserted row
+    $lastProductId = $this->id;
+
+    $result = $this->searchBy_id($lastProductId);
     return $result;
   }
 }
