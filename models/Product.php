@@ -97,4 +97,13 @@ class Product
     $result = $this->searchBy_id($lastProductId);
     return $result;
   }
+
+  public function count()
+  {
+    $query = "SELECT COUNT(*) AS product_count FROM $this->table";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
