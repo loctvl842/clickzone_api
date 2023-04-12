@@ -4,7 +4,7 @@ session_start();
 $page = $_GET['page'] ?? 0;
 $num = $_GET['num'] ?? 36;
 
-echo $num;
+echo json_encode($_SESSION);
 
 
 // $str =  "<p>asdfasdfasdfasdfasdfas</p><p>asdf</p><p>asdfa</p><p>asdfasd</p>";

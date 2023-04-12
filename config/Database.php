@@ -1,18 +1,18 @@
 <?php
 class Database
 {
-  // mysql://beb26cb7f801e0:ea61feec@us-cdbr-east-06.cleardb.net/heroku_b4ebe9b2bef200e?reconnect=true
+  // mysql://b180c081dcb982:6fbb298e@us-cdbr-east-06.cleardb.net/heroku_a0e4ed6b731d7f0?reconnect=true
   // deployed info
-  // private $host = "us-cdbr-east-06.cleardb.net";
-  // private $db_name = "heroku_b4ebe9b2bef200e";
-  // private $username = "beb26cb7f801e0";
-  // private $password = "ea61feec";
+  private $host = "us-cdbr-east-06.cleardb.net";
+  private $db_name = "heroku_a0e4ed6b731d7f0";
+  private $username = "b180c081dcb982";
+  private $password = "6fbb298e";
 
   // dev info
-  private $host = "localhost";
-  private $db_name = "click_zone";
-  private $username = "mysql";
-  private $password = "thangcho";
+  // private $host = "localhost";
+  // private $db_name = "click_zone";
+  // private $username = "mysql";
+  // private $password = "thangcho";
 
   private $conn;
 
