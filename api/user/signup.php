@@ -18,9 +18,13 @@ try {
   $user->username = $user_input->username;
   $user->email = $user_input->email;
   $user->password = $user_input->password;
+  $user->telephone = $user_input->telephone;
 
   if (empty($user->username)) {
     throw new Exception("Username cannot be empty");
+  }
+  if (empty($user->telephone)) {
+    throw new Exception("Telephone cannot be empty");
   }
   if (empty($user->email)) {
     throw new Exception("Email cannot be empty");

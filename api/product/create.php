@@ -32,7 +32,7 @@ try {
 
   $newProduct = $product->add();
 
-  http_response_code(200); // bad request
+  http_response_code(200);
   echo json_encode(array(
     "success" => true,
     "product" => $newProduct,

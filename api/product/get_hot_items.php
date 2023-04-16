@@ -13,7 +13,7 @@ $conn = $database->connect();
 $product = new Product($conn);
 
 try {
-  $products = $product->getBy_pageNumber(0, 5);
+  $products = $product->getBy_pageNumber(2, 0, 5);
   http_response_code(200);
   echo json_encode(array(
     "success" => true,

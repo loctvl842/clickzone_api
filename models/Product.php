@@ -2,7 +2,7 @@
 class Product
 {
   private $conn;
-  private $table = "products";
+  private $table = "product";
 
   // user properties
   public $id;
@@ -43,10 +43,23 @@ class Product
     return $result;
   }
 
-  public function getBy_pageNumber($page, $num)
+  public function getBy_pageNumber($sort, $page, $num)
   {
+    $query = "SELECT * FROM $this->table";
+    // sort
+    if ($sort === 0) {
+      $query .= " ORDER BY modified_at DESC";
+    } elseif ($sort === 1) {
+      $query .= " ORDER BY price";
+    } elseif ($sort === 2) {
+      $query .= " ORDER BY price DESC";
+    } else {
+      throw new Exception("There is no sort: " . $sort);
+    }
+    // get by page
     $start_idx = $page * $num;
-    $query = "SELECT * FROM $this->table LIMIT $start_idx, $num";
+    $query .= " LIMIT $start_idx, $num";
+
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,6 +73,8 @@ class Product
     $stmt->bindParam("productId", $this->id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result["price"] = floatval($result["price"]);
+    $result["old_price"] = floatval($result["old_price"]);
     return $result;
   }
 
