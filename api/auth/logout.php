@@ -17,7 +17,6 @@ try {
   }
   $userController->id = $_GET['userId'];
   $userController->update_refreshToken(null);
-  throw new Exception($_GET['userId'], 409);
 
   echo json_encode(array(
     "success" => true,
