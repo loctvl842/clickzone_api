@@ -9,15 +9,15 @@ include_once '../../models/Product.php';
 $database = new Database();
 $conn = $database->connect();
 
-$product = new Product($conn);
+$productController = new Product($conn);
 
 try {
   if (!isset($_GET['productId'])) {
     throw new Exception("missing productId in query string");
   }
   $productId = $_GET['productId'];
-  $product->id = $productId;
-  $result = $product->searchBy_id($productId);
+  $productController->id = $productId;
+  $result = $productController->searchBy_id($productId);
 
   if (!$result) {
     throw new Exception("Sorry, we could not find the product.");

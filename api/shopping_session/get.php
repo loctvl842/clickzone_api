@@ -10,26 +10,26 @@ include_once '../../models/Shopping_session.php';
 $database = new Database();
 $conn = $database->connect();
 
-$shopping_session = new Shopping_session($conn);
-$user = new User($conn);
+$shoppingSessionController = new Shopping_session($conn);
+$userController = new User($conn);
 
 try {
   if (!isset($_GET['user_id'])) {
     throw new Exception("Please provide user_id in search query");
   }
 
-  $user->id = $_GET['user_id'];
-  $searched_user = $user->searchBy_id();
+  $userController->id = $_GET['user_id'];
+  $searched_user = $userController->searchBy_id();
   if (!$searched_user) {
-    throw new Exception("There is no user with id: " . $user->id);
+    throw new Exception("There is no user with id: " . $userController->id);
   }
 
-  $shopping_session->user_id = $user->id;
+  $shoppingSessionController->user_id = $userController->id;
 
   // don't create new session if there is one exist
-  $result = $shopping_session->searchBy_userId();
+  $result = $shoppingSessionController->searchBy_userId();
   if (!$result) {
-    $result = $shopping_session->add();
+    $result = $shoppingSessionController->add();
   }
 
   http_response_code(200);

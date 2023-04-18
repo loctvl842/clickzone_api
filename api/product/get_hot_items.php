@@ -10,10 +10,10 @@ include_once '../../models/Product.php';
 $database = new Database();
 $conn = $database->connect();
 
-$product = new Product($conn);
+$productController = new Product($conn);
 
 try {
-  $products = $product->getBy_pageNumber(2, 0, 5);
+  $products = $productController->getBy_pageNumber(2, 0, 5);
   http_response_code(200);
   echo json_encode(array(
     "success" => true,

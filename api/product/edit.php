@@ -9,32 +9,32 @@ include_once '../../models/Product.php';
 $database = new Database();
 $conn = $database->connect();
 
-$product = new Product($conn);
+$productController = new Product($conn);
 
 try {
   $user_input = json_decode(file_get_contents("php://input"));
 
-  $product->id = $user_input->id;
+  $productController->id = $user_input->id;
 
-  $targetProduct = $product->searchBy_id();
+  $targetProduct = $productController->searchBy_id();
 
-  $product->name = $user_input->name ?? $targetProduct["name"];
-  $product->image_url = $user_input->image_url ?? $targetProduct["image_url"];
-  $product->price = $user_input->price ?? $targetProduct["price"];
-  $product->old_price = $user_input->old_price ?? $targetProduct["old_price"];
-  $product->description = $user_input->description ?? $targetProduct["description"];
+  $productController->name = $user_input->name ?? $targetProduct["name"];
+  $productController->image_url = $user_input->image_url ?? $targetProduct["image_url"];
+  $productController->price = $user_input->price ?? $targetProduct["price"];
+  $productController->old_price = $user_input->old_price ?? $targetProduct["old_price"];
+  $productController->description = $user_input->description ?? $targetProduct["description"];
 
-  if (empty($product->name)) {
+  if (empty($productController->name)) {
     throw new Exception("Name of product cannot be empty.");
   }
-  if (empty($product->image_url)) {
+  if (empty($productController->image_url)) {
     throw new Exception("Please provide an image of product.");
   }
-  if (empty($product->price)) {
+  if (empty($productController->price)) {
     throw new Exception("Please provide price of product.");
   }
 
-  $updatedProduct = $product->editBy_id();
+  $updatedProduct = $productController->editBy_id();
   http_response_code(200);
   echo json_encode(array(
     "success" => true,

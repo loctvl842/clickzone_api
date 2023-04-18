@@ -9,45 +9,45 @@ include_once '../../models/User.php';
 $database = new Database();
 $conn = $database->connect();
 
-$user = new User($conn);
+$userController = new User($conn);
 
 
 try {
   $user_input = json_decode(file_get_contents("php://input"));
 
-  $user->username = $user_input->username;
-  $user->email = $user_input->email;
-  $user->password = $user_input->password;
-  $user->telephone = $user_input->telephone;
+  $userController->username = $user_input->username;
+  $userController->email = $user_input->email;
+  $userController->password = $user_input->password;
+  $userController->telephone = $user_input->telephone;
 
-  if (empty($user->username)) {
+  if (empty($userController->username)) {
     throw new Exception("Username cannot be empty");
   }
-  if (empty($user->telephone)) {
+  if (empty($userController->telephone)) {
     throw new Exception("Telephone cannot be empty");
   }
-  if (empty($user->email)) {
+  if (empty($userController->email)) {
     throw new Exception("Email cannot be empty");
   }
   // Validate email
-  if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+  if (!filter_var($userController->email, FILTER_VALIDATE_EMAIL)) {
     throw new Exception("Invalid email format");
   }
-  if (empty($user->password)) {
+  if (empty($userController->password)) {
     throw new Exception("Password cannot be empty");
   }
 
-  if ($user->searchBy_email()) {
+  if ($userController->searchBy_email()) {
     $msg = "Sorry, this email address is already in use. Please choose a different email address.";
     throw new Exception($msg);
   }
 
-  if (strlen($user->password) < User::$min_pwd_length) {
+  if (strlen($userController->password) < User::$min_pwd_length) {
     $min_length = User::$min_pwd_length;
     throw new Exception("Password must be at least $min_length characters long.");
   }
 
-  $user->add();
+  $userController->add();
   echo json_encode(array(
     "registered" => true,
     "message" => "Register successfully",

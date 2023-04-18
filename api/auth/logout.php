@@ -1,27 +1,28 @@
 <?php
-
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+
 include_once '../../config/Database.php';
-include_once '../../models/Product.php';
+include_once '../../models/User.php';
 
 $database = new Database();
 $conn = $database->connect();
 
-$productController = new Product($conn);
+$userController = new User($conn);
 
 try {
-  $user_input = json_decode(file_get_contents("php://input"));
+  if (!isset($_GET['userId'])) {
+    throw new Exception('Please provide userId in query string');
+  }
+  $userController->id = $_GET['userId'];
+  $userController->update_refreshToken(null);
 
-  $productController->id = $user_input->productId;
-  $productController->removeBy_id();
   echo json_encode(array(
     "success" => true,
-    "message" => "remove successfully",
   ));
 } catch (Exception $e) {
-  http_response_code(500);
+  http_response_code(400);
   echo json_encode(array(
     "success" => false,
     "message" => $e->getMessage(),

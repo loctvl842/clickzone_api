@@ -20,8 +20,8 @@ class User
 
   public function searchBy_id()
   {
-
-    $query = "SELECT * FROM $this->table WHERE $this->table.id = :userId";
+    $query = "SELECT id, username, email, password, telephone, is_admin
+              FROM $this->table WHERE $this->table.id = :userId";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam("userId", $this->id);
     $stmt->execute();
@@ -37,7 +37,8 @@ class User
     }
 
     // prepare
-    $query = "SELECT id, username, email, password, is_admin FROM $this->table WHERE email = :email";
+    $query = "SELECT id, username, email, password, telephone, is_admin
+              FROM $this->table WHERE email = :email";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam("email", $this->email);
     $stmt->execute();
@@ -65,5 +66,26 @@ class User
       "password" => $this->password
     );
     return $stmt->execute($data);
+  }
+
+  public function update_refreshToken($refreshToken)
+  {
+    $query = "UPDATE $this->table SET refresh_token = :refreshToken WHERE id = :userId";
+    $stmt = $this->conn->prepare($query);
+    if ($refreshToken === null) $stmt->bindParam('refreshToken', null, PDO::PARAM_NULL);
+    else $stmt->bindParam('refreshToken', $refreshToken);
+    $stmt->bindParam('userId', $this->id);
+    $stmt->execute();
+  }
+
+  public function searchBy_refreshToken($refreshToken)
+  {
+    $query = "SELECT id, username, email, password, telephone, is_admin
+              FROM $this->table WHERE $this->table.refresh_token = :refreshToken";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam("refreshToken", $refreshToken);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
   }
 }

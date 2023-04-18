@@ -9,18 +9,18 @@ include_once '../../models/Cart_item.php';
 $database = new Database();
 $conn = $database->connect();
 
-$cart_item = new Cart_item($conn);
+$cartItemController = new Cart_item($conn);
 
 try {
   $user_input = json_decode(file_get_contents("php://input"));
-  $cart_item->id = $user_input->id;
-  $cart_item->quantity = $user_input->quantity;
-  $newCartItem = $cart_item->updateBy_id();
+  $cartItemController->id = $user_input->id;
+  $cartItemController->quantity = $user_input->quantity;
+  $cartItem = $cartItemController->updateBy_id();
 
   http_response_code(200);
   echo json_encode(array(
     "success" => true,
-    "cart_item" => $newCartItem,
+    "cart_item" => $cartItem,
   ));
 } catch (Exception $e) {
   http_response_code(500);

@@ -1,23 +1,34 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv as Dotenv;
+
 class Database
 {
-  // deployed info
-  // private $host = "54.179.5.227";
-  // private $db_name = "clickzone";
-  // private $username = "loc";
-  // private $password = "Thangcho1234$";
-
-  // dev info
-  private $host = "localhost";
-  private $db_name = "click_zone";
-  private $username = "mysql";
-  private $password = "thangcho";
+  private $host;
+  private $db_name;
+  private $username;
+  private $password;
 
   private $conn;
+
+  public function __construct()
+  {
+
+    $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+    $dotenv->load();
+
+    $this->host = $_ENV['DB_HOST'];
+    $this->db_name = $_ENV['DB_NAME'];
+    $this->username = $_ENV['DB_USERNAME'];
+    $this->password = $_ENV['DB_PASSWORD'];
+  }
 
   public function connect()
   {
     $this->conn = null;
+
     try {
       $this->conn = new PDO(
         "mysql:host=$this->host;dbname=$this->db_name",

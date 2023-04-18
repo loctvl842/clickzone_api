@@ -1,13 +1,30 @@
 <?php
-session_start();
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+include_once '../../config/Database.php';
+include_once '../../models/User.php';
 
-if (isset($_COOKIE['token'])) {
-  http_response_code(200);
-  $token = $_COOKIE["token"];
-  $user_info = $_SESSION[$token];
-  unset($user_info["password"]);
-  echo json_encode(array("user" => $user_info));
-} else {
-  http_response_code(200);
-  echo json_encode(array("message" => "Not logged in"));
+$database = new Database();
+$conn = $database->connect();
+
+$userController = new User($conn);
+
+try {
+  require_once "../../middleware/auth.php";
+  $userController->id = $userId;
+  $user = $userController->searchBy_id($userId);
+
+  echo json_encode(array(
+    "success" => true,
+    "user" => $user
+  ));
+} catch (Exception $e) {
+  $statusCode = $e->getCode();
+  $message = $e->getMessage();
+  http_response_code($statusCode);
+  echo json_encode(array(
+    "success" => false,
+    "message" => $message,
+  ));
 }

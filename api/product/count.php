@@ -9,10 +9,10 @@ include_once '../../models/Product.php';
 $database = new Database();
 $conn = $database->connect();
 
-$product = new Product($conn);
+$productController = new Product($conn);
 
 try {
-  $result = $product->count();
+  $result = $productController->count();
   echo json_encode($result['product_count']);
 } catch (Exception $e) {
   http_response_code(500);

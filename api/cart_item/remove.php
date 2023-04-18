@@ -9,15 +9,15 @@ include_once '../../models/Cart_item.php';
 $database = new Database();
 $conn = $database->connect();
 
-$cart_item = new Cart_item($conn);
+$cartItemController = new Cart_item($conn);
 
 try {
   if (!isset($_GET['cart_item_id'])) {
     throw new Exception("Please provide cart_item_id in search query");
   }
 
-  $cart_item->id = $_GET['cart_item_id'];
-  $cart_item->removeBy_id();
+  $cartItemController->id = $_GET['cart_item_id'];
+  $cartItemController->removeBy_id();
 
   http_response_code(200);
   echo json_encode(array(

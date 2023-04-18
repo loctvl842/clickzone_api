@@ -10,13 +10,13 @@ include_once '../../models/Product.php';
 $database = new Database();
 $conn = $database->connect();
 
-$product = new Product($conn);
+$productController = new Product($conn);
 
 try {
-  $sort = (int) $_GET['sort'] ?? 0;
-  $page = (int) $_GET['page'] ?? 0;
-  $num = (int) $_GET['num'] ?? 36;
-  $products = $product->getBy_pageNumber($sort, $page, $num);
+  $sort = (int) ($_GET['sort'] ?? 0);
+  $page = (int) ($_GET['page'] ?? 0);
+  $num = (int) ($_GET['num'] ?? 36);
+  $products = $productController->getBy_pageNumber($sort, $page, $num);
   http_response_code(200);
   echo json_encode(array(
     "success" => true,
