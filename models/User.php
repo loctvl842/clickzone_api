@@ -72,9 +72,11 @@ class User
   {
     $query = "UPDATE $this->table SET refresh_token = :refreshToken WHERE id = :userId";
     $stmt = $this->conn->prepare($query);
-    if ($refreshToken === null) $stmt->bindParam('refreshToken', null, PDO::PARAM_NULL);
-    else $stmt->bindParam('refreshToken', $refreshToken);
-    throw new Exception($refreshToken, 409);
+    if ($refreshToken === null) {
+      throw new Exception('loc', 409);
+
+      $stmt->bindParam('refreshToken', null, PDO::PARAM_NULL);
+    } else $stmt->bindParam('refreshToken', $refreshToken);
     $stmt->bindParam('userId', $this->id);
     $stmt->execute();
   }
