@@ -12,6 +12,7 @@ $conn = $database->connect();
 $userController = new User($conn);
 
 try {
+  throw new Exception($_GET['userId'], 409);
   if (!isset($_GET['userId'])) {
     throw new Exception('Please provide userId in query string', 403);
   }
