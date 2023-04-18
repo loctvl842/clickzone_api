@@ -74,7 +74,7 @@ class User
     $stmt = $this->conn->prepare($query);
     if ($refreshToken === null) {
 
-      $stmt->bindParam(':refreshToken', null);
+      $stmt->bindParam('refreshToken', null);
       throw new Exception('loc', 409);
     } else $stmt->bindParam('refreshToken', $refreshToken);
     $stmt->bindParam('userId', $this->id);
