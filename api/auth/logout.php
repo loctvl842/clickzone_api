@@ -16,8 +16,8 @@ try {
     throw new Exception('Please provide userId in query string', 403);
   }
   $userController->id = $_GET['userId'];
-  throw new Exception($_GET['userId'], 409);
   $userController->update_refreshToken(null);
+  throw new Exception($_GET['userId'], 409);
 
   echo json_encode(array(
     "success" => true,
