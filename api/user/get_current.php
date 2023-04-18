@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
