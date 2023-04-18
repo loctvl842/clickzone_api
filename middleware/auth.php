@@ -5,7 +5,7 @@ include_once __DIR__ . "/../models/Auth.php";
 
 try {
   $headers = getallheaders();
-  throw new Exception($headers['authorization'], 406);
+  throw new Exception(json_encode($headers), 406);
   if (!preg_match('/Bearer\s(\S+)/', $headers['authorization'], $matches)) {
     throw new Exception('Token not found in request', 400);
     exit;
