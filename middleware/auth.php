@@ -4,9 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 include_once __DIR__ . "/../models/Auth.php";
 
 try {
-  $headers = apache_request_headers();
-  throw new Exception($headers['token'], 400);
-  if (!preg_match('/Bearer\s(\S+)/', $headers['token'], $matches)) {
+  $headers = getallheaders();
+  if (!preg_match('/Bearer\s(\S+)/', $headers['authorization'], $matches)) {
     throw new Exception('Token not found in request', 400);
     exit;
   }
