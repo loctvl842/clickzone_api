@@ -74,7 +74,6 @@ class User
     $stmt = $this->conn->prepare($query);
     if ($refreshToken === null) {
       $stmt->bindValue(':refreshToken', null, PDO::PARAM_NULL);
-      throw new Exception('loc', 409);
     } else $stmt->bindValue(':refreshToken', $refreshToken);
     $stmt->bindValue(':userId', $this->id);
     $stmt->execute();
