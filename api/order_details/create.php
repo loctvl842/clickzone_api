@@ -1,27 +1,26 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 include_once '../../config/Database.php';
-include_once '../../models/Cart_item.php';
+include_once '../../models/Order_details.php';
 
 $database = new Database();
 $conn = $database->connect();
 
-$cartItemController = new Cart_item($conn);
+$orderDetailsController = new Order_details($conn);
 
 try {
-  if (!isset($_GET['session_id'])) {
-    throw new Exception("Please provide session_id in search query");
-  }
-  $cartItemController->session_id = $_GET['session_id'];
-  $cartItem = $cartItemController->getBy_sessionId();
+  $user_input = json_decode(file_get_contents("php://input"));
+  $orderDetailsController->user_id = $user_input->user_id;
+  $orderDetailsController->total = $user_input->total;
+  $newOrderDetails = $orderDetailsController->add();
 
   http_response_code(200);
   echo json_encode(array(
     "success" => true,
-    "cart_items" => $cartItem,
+    "order_details" => $newOrderDetails,
   ));
 } catch (Exception $e) {
   http_response_code(500);

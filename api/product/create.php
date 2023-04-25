@@ -16,6 +16,7 @@ try {
 
   $productController->name = $user_input->name;
   $productController->image_url = $user_input->image_url;
+  $productController->category_id = $user_input->category_id;
   $productController->price = $user_input->price;
   $productController->old_price = $user_input->old_price;
   $productController->description = $user_input->description;

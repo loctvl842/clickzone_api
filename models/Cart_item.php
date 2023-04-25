@@ -103,4 +103,12 @@ class Cart_item
     $stmt->bindParam('cartItemId', $this->id);
     $stmt->execute();
   }
+
+  public function removeBy_sessionId()
+  {
+    $query = "DELETE FROM $this->table WHERE $this->table.session_id = :sessionId";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam('sessionId', $this->session_id);
+    $stmt->execute();
+  }
 }

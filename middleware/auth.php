@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 include_once __DIR__ . "/../models/Auth.php";
 
+use Firebase\JWT\ExpiredException;
+
 try {
   $headers = apache_request_headers();
   if (!preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
@@ -17,6 +19,8 @@ try {
   }
 
   $userId = Auth::verify($accessToken, $_ENV['ACCESS_TOKEN_SECRET']);
+} catch (ExpiredException $e) {
+  throw new Exception('Token has expired.', 401);
 } catch (Exception $e) {
   $statusCode = $e->getCode();
   $message = $e->getMessage();

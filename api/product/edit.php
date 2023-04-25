@@ -20,6 +20,7 @@ try {
 
   $productController->name = $user_input->name ?? $targetProduct["name"];
   $productController->image_url = $user_input->image_url ?? $targetProduct["image_url"];
+  $productController->category_id = $user_input->category_id ?? $targetProduct["category_id"];
   $productController->price = $user_input->price ?? $targetProduct["price"];
   $productController->old_price = $user_input->old_price ?? $targetProduct["old_price"];
   $productController->description = $user_input->description ?? $targetProduct["description"];

@@ -14,12 +14,14 @@ try {
   require_once "../../middleware/auth.php";
   $userController->id = $userId;
   $user = $userController->searchBy_id($userId);
-
-  unset($user['password']);
+  if (!$user['is_admin']) {
+    throw new Exception("You are not admin user.", 403);
+  }
+  $users = $userController->getAll();
 
   echo json_encode(array(
     "success" => true,
-    "user" => $user
+    "users" => $users
   ));
 } catch (Exception $e) {
   $statusCode = $e->getCode();

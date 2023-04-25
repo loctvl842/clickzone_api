@@ -27,9 +27,9 @@ class Shopping_session
 
   public function searchBy_userId()
   {
-    $query = "SELECT * FROM $this->table WHERE user_id = :user_id";
+    $query = "SELECT * FROM $this->table WHERE user_id = :userId";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam("user_id", $this->user_id);
+    $stmt->bindParam("userId", $this->user_id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $result['total'] = floatval($result['total']);
@@ -48,5 +48,13 @@ class Shopping_session
     $this->id = $lastProductId;
     $result = $this->searchBy_id($lastProductId);
     return $result;
+  }
+
+  public function removeBy_id()
+  {
+    $query = "DELETE FROM $this->table WHERE id = :shoppingSessionId";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam('shoppingSessionId', $this->id);
+    $stmt->execute();
   }
 }

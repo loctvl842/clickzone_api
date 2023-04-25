@@ -12,7 +12,9 @@ $conn = $database->connect();
 $productController = new Product($conn);
 
 try {
-  $result = $productController->count();
+  $productController->category_id = (int) ($_GET['category_id'] ?? null);
+  $searchString = $_GET['search_string'] ?? null;
+  $result = $productController->count($searchString);
   echo json_encode($result['product_count']);
 } catch (Exception $e) {
   http_response_code(500);
