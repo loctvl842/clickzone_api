@@ -1,10 +1,12 @@
 SELECT
-  c.id,
-  cr.parent_id
+  od.id,
+  od.user_id,
+  od.total,
+  oi.quantity,
+  p.name,
+  u.username
 FROM
-category AS c
-LEFT JOIN category_relationship AS cr
-ON cr.child_id = c.id
-WHERE
-c.id = 9
-
+order_details AS od
+JOIN order_items AS oi ON od.id = oi.order_id
+JOIN product AS p ON oi.product_id = p.id
+JOIN user AS u ON u.id = od.user_id

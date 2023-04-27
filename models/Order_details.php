@@ -65,4 +65,29 @@ WHERE user_id = :userId;
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   }
+
+  public function getAll()
+  {
+    $query = "
+SELECT
+  od.id,
+  od.user_id,
+  od.total,
+  od.created_at,
+  oi.product_id,
+  oi.quantity,
+  p.name as product_name,
+  p.price as price,
+  u.username
+FROM
+$this->table AS od
+JOIN order_items AS oi ON od.id = oi.order_id
+JOIN product AS p ON oi.product_id = p.id
+JOIN user AS u ON u.id = od.user_id
+";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
