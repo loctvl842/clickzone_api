@@ -50,4 +50,24 @@ WHERE parent.id = :categoryId
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
+
+  public function search_parentId()
+  {
+    $query = "
+SELECT
+  c.id,
+  cr.parent_id
+FROM
+$this->table AS c
+LEFT JOIN category_relationship AS cr
+ON cr.child_id = c.id
+WHERE
+c.id = :categoryId
+";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam("categoryId", $this->id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['parent_id'] === null ? $result['id'] : $result['parent_id'];
+  }
 }
