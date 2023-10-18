@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  web:
+    image: 'nginx:latest'
+    volumes:
+      - ./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./app:/var/www/html
+    ports:
+      - 8000:80
+    restart: always
+    env_file:
+      - ./app/.env
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - mysql-network
+
+  php:
+    build: .
+    volumes:
+      - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./app:/var/www/html
+    hostname: php
+    env_file:
+      - ./app/.env
+    depends_on:
+      - mysql
+    networks:
+      - mysql-network
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 9000:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+    depends_on:
+      - mysql
+    networks:
+      - mysql-network
+
+  mysql:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - ./app/.env
+    hostname: database
+    environment:
+      MYSQL_ROOT_PASSWORD: thangcho
+    networks:
+      - mysql-network
+    volumes:
+      - "./data/db/mysql:/var/lib/mysql"
+
+networks:
+  mysql-network:
+    driver: bridge
+    name: mysql-network

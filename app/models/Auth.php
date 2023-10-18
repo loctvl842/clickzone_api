@@ -11,7 +11,7 @@ class Auth
     $key = $_ENV['ACCESS_TOKEN_SECRET'];
     $issuedAt = new DateTimeImmutable();
     $expire = $issuedAt->modify('+15 seconds')->getTimestamp();
-    $serverName = $_ENV["DB_HOST"];
+    $serverName = $_ENV["MYSQL_HOST"];
     $data = [
       'iat' => $issuedAt->getTimestamp(),
       'iss' => $serverName,
@@ -28,7 +28,7 @@ class Auth
     $key = $_ENV['REFRESH_TOKEN_SECRET'];
     $issuedAt = new DateTimeImmutable();
     $expire = $issuedAt->modify('+1 hour')->getTimestamp();
-    $serverName = $_ENV["DB_HOST"];
+    $serverName = $_ENV["MYSQL_HOST"];
     $data = [
       'iat' => $issuedAt->getTimestamp(),
       'iss' => $serverName,
